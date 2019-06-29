@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/ico" href="./assets/title-logo.png" />
+  <title>Snooker</title>
+
+  <link rel="stylesheet" href="./css/reset.css">
+</head>
+<body>
+  <canvas id="snookerGame" height='748' width='1500'></canvas>
+  <script src="./js/Canvas.js"></script>
+  <script src="./js/Assets.js"></script>
+  <script src="./js/Stick.js"></script>
+  <script src="./js/GameWorld.js"></script>
+  <script src="./js/Game.js"></script>
+  <script>    
+    var canvas = new Canvas2D('snookerGame');
+    loadAssets(snookerGame.start);
+  </script>
+</body>
+</html>
