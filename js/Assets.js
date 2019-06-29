@@ -17,8 +17,13 @@ function loadAssets(callback) {
   }
 
   sprites.snookerBoard = loadSpriteElement('snooker-table2.png');
-  // sprites.stick = loadSpriteElement('pool-stick2.png');
-  sprites.stick = loadSpriteElement('pool-stick3.png');
+
+  //Stick sprites load
+  sprites.stick1 = loadSpriteElement('pool-stick1.png');
+  sprites.stick2 = loadSpriteElement('pool-stick2.png');
+  sprites.stick3 = loadSpriteElement('pool-stick3.png');
+
+  //Ball sprites load
   sprites.cueBall = loadSpriteElement('cue-ball.png');
 
   assetsLoadingLoop(callback);
