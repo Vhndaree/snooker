@@ -11,6 +11,9 @@
 </head>
 <body>
   <canvas id="snookerGame" height='748' width='1500'></canvas>
+  <script src="./js/Vector.js"></script>
+  <script src="./js/inputHandler/ButtonState.js"></script>
+  <script src="./js/inputHandler/MouseHandler.js"></script>
   <script src="./js/Canvas.js"></script>
   <script src="./js/Assets.js"></script>
   <script src="./js/Stick.js"></script>
@@ -18,6 +21,8 @@
   <script src="./js/Game.js"></script>
   <script>    
     var canvas = new Canvas2D('snookerGame');
+    var Mouse = new MouseHandler();
+    var snookerGame = new Game();
     loadAssets(snookerGame.start);
   </script>
 </body>
