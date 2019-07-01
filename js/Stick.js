@@ -1,15 +1,32 @@
 class Stick {
-  constructor(position = new Vector()) {
+  constructor(position = new Vector(), onShoot) {
     this.position = position;
     this.rotationAngle = 0;
+    this.origin = STICK_ORIGIN.copyPosition();
+    this.power = 0;
+    this.onShoot = onShoot;
+    this.shoot = false;
   }
 
   update() {
     this.updateRotation();
+
+    if(!this.shoot)
+    if(Mouse.left.down) {
+      this.increasePower();
+    } else if(this.power > 0) {
+      this.shootBall();
+    }
   }
 
   draw() {
-    canvas.drawImage(sprites.stick1, this.position, STICK_ORIGIN, this.rotationAngle);
+    canvas.drawImage(sprites.stick1, this.position, this.origin, this.rotationAngle);
+    canvas.canvasContext.beginPath();
+    canvas.canvasContext.setLineDash([20]);
+    canvas.canvasContext.moveTo(this.position.x, this.position.y);
+    canvas.canvasContext.lineTo(Mouse.position.x, Mouse.position.y);
+    canvas.canvasContext.stroke();
+    canvas.canvasContext.lineWidth = 3;
   }
 
   updateRotation() {
@@ -17,5 +34,22 @@ class Stick {
     var adjacent = Mouse.position.x - this.position.x;
 
     this.rotationAngle = Math.atan2(opposite, adjacent);
+  }
+
+  shootBall() {
+    this.onShoot(this.power, this.rotationAngle);
+    this.power = 0;
+    this.origin = STICK_SHOOT_ORIGIN.copyPosition();
+    this.shoot = true;
+  }
+
+  increasePower(){
+    this.power += POWER;
+    this.origin.x += STICK_ORIGIN_CHANGE;
+  }
+
+  reposition(position) {
+    this.position = position.copyPosition();
+    this.origin = STICK_ORIGIN.copyPosition();
   }
 }

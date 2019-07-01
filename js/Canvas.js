@@ -3,6 +3,7 @@ class Canvas2D {
     this.canvas = document.getElementById(canvasID);
     this.canvas.width= CANVAS_WIDTH;
     this.canvas.height = CANVAS_HEIGHT;
+    this.canvas.style.cursor = "url('./assets/arrow-cursor.cur'), default";
     this.canvasContext = this.canvas.getContext('2d');
   }
 

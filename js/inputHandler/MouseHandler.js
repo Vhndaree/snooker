@@ -4,7 +4,7 @@ class MouseHandler {
     this.middle = new ButtonState();
     this.right = new ButtonState();
 
-    this.position = new Vector();
+    this.position = INITIAL_STICK_POSITION;
 
     document.onmousemove = this.handleMousemove;
     document.onmousedown = this.handleMouseDown;
@@ -18,7 +18,6 @@ class MouseHandler {
   }
 
   handleMousemove(event) {
-
     var x = event.pageX;
     var y = event.pageY;
 

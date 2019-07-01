@@ -14,6 +14,5 @@ class Game extends GameWorld{
     Mouse.reset();
 
     requestAnimationFrame(snookerGame.mainLoop);
-
   }
 }
