@@ -20,3 +20,4 @@ class Canvas2D {
   }
 }
 
+var canvas = new Canvas2D('snookerGame');

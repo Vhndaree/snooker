@@ -16,3 +16,5 @@ class Game extends GameWorld{
     requestAnimationFrame(snookerGame.mainLoop);
   }
 }
+
+var snookerGame = new Game();

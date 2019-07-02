@@ -55,3 +55,5 @@ class MouseHandler {
     }
   }
 }
+
+var Mouse = new MouseHandler();

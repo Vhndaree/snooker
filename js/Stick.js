@@ -12,15 +12,16 @@ class Stick {
     this.updateRotation();
 
     if(!this.shoot)
-    if(Mouse.left.down) {
-      this.increasePower();
-    } else if(this.power > 0) {
-      this.shootBall();
-    }
+    
+      if(Mouse.left.down) {
+        this.increasePower();
+      } else if(this.power > 0) {
+        this.shootBall();
+      }
   }
 
   draw() {
-    canvas.drawImage(sprites.stick1, this.position, this.origin, this.rotationAngle);
+    canvas.drawImage(sprites.stick1, this.position, this.origin, this.rotationAngle, 938, 22);
     canvas.canvasContext.beginPath();
     canvas.canvasContext.setLineDash([20]);
     canvas.canvasContext.moveTo(this.position.x, this.position.y);
@@ -44,12 +45,16 @@ class Stick {
   }
 
   increasePower(){
-    this.power += POWER;
-    this.origin.x += STICK_ORIGIN_CHANGE;
+
+    if(this.power < MAX_POWER) {
+      this.power += POWER;
+      this.origin.x += STICK_ORIGIN_CHANGE;
+    }
   }
 
   reposition(position) {
     this.position = position.copyPosition();
     this.origin = STICK_ORIGIN.copyPosition();
+    this.shoot =false;
   }
 }
