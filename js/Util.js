@@ -24,3 +24,24 @@ function applyStyles(element, styles) {
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+/**
+ * 
+ * @param {*} num 
+ * @return boolean
+ * checks if number is even or not
+ */
+function isEven(num) {
+  return num % 2 == 0;
+}
+
+
+/**
+ * 
+ * @param {*} num 
+ * @return boolean
+ * checks if number is odd or not
+ */
+function isOdd(num) {
+  return !isEven(num);
+}

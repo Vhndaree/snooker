@@ -3,7 +3,7 @@ const CANVAS_WIDTH = 1500;
 const CANVAS_HEIGHT = 748;
 
 //Stick
-const INITIAL_CUE_POSITION = new Vector(380, 370); //initial cue ball position x: 380, y:370 for testing later should be handled with mouse move initially
+const INITIAL_CUE_POSITION = new Vector(280, 370); //initial cue ball position x: 380, y:370 for testing later should be handled with mouse move initially
 const CUE_BALL_ORIGIN = new Vector(20, 17.5);
 const INITIAL_STICK_POSITION = new Vector(380, 370);
 const STICK_ORIGIN = new Vector(980, 10); //origin should always greater than width of stick element
@@ -45,7 +45,7 @@ const INITIAL_BALLS_POSITION = [
   [new Vector(1170, 441), BALL_COLOR.RED],
   [new Vector(380, 495), BALL_COLOR.YELLOW],
   [new Vector(380, 255), BALL_COLOR.GREEN],
-  // [new Vector(380, 370), BALL_COLOR.BROWN],
+  [new Vector(380, 370), BALL_COLOR.BROWN],
   [new Vector(695.5, 370), BALL_COLOR.BLUE],
   [new Vector(1011, 370), BALL_COLOR.PINK],
   [new Vector(1300, 370), BALL_COLOR.BLACK],
@@ -66,14 +66,25 @@ const TABLE_BORDER = {
   leftX: 85,
 };
 
+const D_BOX_ORIGIN = new Vector(380, 365);
+const D_BOX_RADIUS = 125;
+
 //table wholes coordinates
 const TABLE_POCKETS = [
   new Vector(75, 75),//top left
-  new Vector(750, 60),//top middle
+  new Vector(755, 65),//top middle
   new Vector(1430, 68),//top right
   new Vector(68, 675),//bottom left
-  new Vector(750, 695),//bottom middle
+  new Vector(755, 690),//bottom middle
   new Vector(1435, 685),//bottom right
+];
+const TABLE_POCKETS_SCORES = [
+  new Vector(70, 70),//top left
+  new Vector(753, 70),//top middle
+  new Vector(1435, 70),//top right
+  new Vector(70, 683),//bottom left
+  new Vector(753, 683),//bottom middle
+  new Vector(1435, 683),//bottom right
 ];
 
 const POCKET_RADIUS = 45;

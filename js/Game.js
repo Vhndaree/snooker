@@ -17,4 +17,4 @@ class Game extends GameWorld{
   }
 }
 
-var snookerGame = new Game();
+// var snookerGame = new Game();

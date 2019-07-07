@@ -1,5 +1,7 @@
 var sprites = {};
 var assetsStillLoading = 0;
+var snookerGame;
+var playerName = document.getElementById('name');
 
 function assetsLoadingLoop() {
 

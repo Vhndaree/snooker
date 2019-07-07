@@ -4,8 +4,12 @@ class Ball {
     this.velocity = new Vector();
     this.isMoving = false;
     this.force = 0;
+    this.color = color;
     this.sprite = getBallSpriteByColor(color);
     this.visible = true;
+    this.inPocket = false;
+    this.countPoint = true;
+    this.include = true;
   }
 
   update(powerMultiplier) {
@@ -23,8 +27,8 @@ class Ball {
 
   draw() {
 
-    if (this.visible) {      
-      canvas.drawImage(this.sprite, this.position, CUE_BALL_ORIGIN);
+    if (this.visible) {
+      canvas.drawImage(this.sprite, this.position, CUE_BALL_ORIGIN.copyCoordinates());
     }
   }
 
@@ -36,7 +40,7 @@ class Ball {
   collideWithBall(ball) {
 
     if (!this.visible || !ball.visible) {
-      
+
       return;
     }
     //Elastic collision for 2D
@@ -46,7 +50,7 @@ class Ball {
     const distance = normalVector.getLength();
 
     if (distance >= BALL_DIAMETER) {
-      
+
       return; //case of no collision
     }
 
@@ -96,7 +100,7 @@ class Ball {
   collideWithTable(table) {
 
     if (!this.visible) {
-      
+
       return;
     }
 
@@ -131,20 +135,50 @@ class Ball {
     }
   }
 
-  handlePocketCollision() {
+  handlePocketCollision() {    
 
-    var inPocket ;
+    for (var i = 0; i < TABLE_POCKETS.length; i++) {
 
-    for (var i = 0; i < TABLE_POCKETS.length; i++){
-      
-      if(this.position.distanceFrom(TABLE_POCKETS[i]) < POCKET_RADIUS) {
-        inPocket = true;
+      if (this.position.distanceFrom(TABLE_POCKETS[i]) < POCKET_RADIUS) {
+        this.inPocket = true;
+        this.position = TABLE_POCKETS_SCORES[i].copyCoordinates();
       }
     }
 
-    if (inPocket) {
-      this.visible = false;
+    if (this.inPocket) {
+      this.velocity = new Vector();
+      this.hideBall();
       this.isMoving = false;
+      if(this.color === 1 && this.countPoint) {
+        snookerGame.redBallsOnPocket++;
+        this.countPoint = false;
+      }
     }
+  }
+
+  findPositionOnBoard(balls, newPosition = INITIAL_BALLS_POSITION[balls.indexOf(this)][0]) {
+
+    for (var i = 0; i < balls.length; i++) {
+
+      if (this === balls[i]) continue;
+
+      if (newPosition.distanceFrom(balls[i]) < BALL_RADIUS) {
+        this.findPositionOnBoard(balls, new Vector(newPosition + BALL_RADIUS, initialPosition.y));
+      }
+      
+      return newPosition;
+    }
+  }
+
+  hideBall() {
+    if(this.color === 8) {
+      snookerGame.stick.visible =false;
+    }
+    setTimeout(() => {
+      if(this.color === 8) {
+        snookerGame.stick.visible = true;
+      }
+      this.visible = false;
+    }, 1500);
   }
 }

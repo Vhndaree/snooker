@@ -4,7 +4,7 @@ class Vector {
     this.y = y;
   }
 
-  copyPosition() {
+  copyCoordinates() {
     return new Vector(this.x, this.y);
   }
 
