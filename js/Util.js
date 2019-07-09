@@ -5,7 +5,7 @@
  * @param {*} styles 
  */
 function applyStyles(element, styles) {
-  var styleKeys = Object.keys(styles);
+  let styleKeys = Object.keys(styles);
 
   if (styleKeys && styleKeys.length) {
     styleKeys.forEach(styleKey => {
@@ -44,4 +44,57 @@ function isEven(num) {
  */
 function isOdd(num) {
   return !isEven(num);
+}
+
+/**
+ * 
+ * @param {*} array 
+ * 
+ * returns lowest value from the array
+ */
+function getMin(array) {
+
+  if(array.length == 0) return;
+  let min = array[0];
+
+  for (let i = 0 ; i < array.length ; i++) {
+    if(min > array[i]) min = array[i];
+  }
+
+  return min;
+}
+
+/**
+ * 
+ * @param {*} array 
+ * 
+ * returns highest value from the array
+ */
+function getMax(array) {
+
+  if(array.length == 0) return;
+
+  let max = array[0];
+
+  for (let i = 0 ; i < array.length ; i++) {
+    
+    if(max < array[i]) max = array[i];
+  }
+
+  return max;
+}
+
+/**
+ * toggles full screen mode
+ */
+function toggleFullscreen(isFullcreen) {
+  isFullscreen = !isFullscreen;
+
+  if (isFullscreen) {
+    element.requestFullscreen();
+  }
+
+  if (!isFullscreen) {
+    document.exitFullscreen();
+  }
 }

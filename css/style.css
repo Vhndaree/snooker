@@ -1,0 +1,26 @@
+#label1, #label2 {
+  font-family: "Indie Flower";
+  color: #fff;
+  font-size: 24px;
+}
+
+#player1, #player2 {
+  font-family: "Indie Flower";
+  color: #fff;
+  font-size: 24px;
+  background: transparent;
+  border: none;
+  width: 200px;
+  border-bottom: white 1px solid;
+  margin-left: 20px;
+  padding-left: 10px;
+  margin-bottom: 50px;
+}
+
+#formDiv {
+  display: none;
+  position: fixed;
+  top: 200px;
+  left: 200px;
+  z-index: 2;
+}

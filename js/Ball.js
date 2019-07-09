@@ -5,20 +5,24 @@ class Ball {
     this.isMoving = false;
     this.force = 0;
     this.color = color;
-    this.sprite = getBallSpriteByColor(color);
+    this.sprite = startGame.getBallSpriteByColor(color);
     this.visible = true;
     this.inPocket = false;
     this.countPoint = true;
-    this.include = true;
+    this.include = true; //used for include this ball in ball pocketed count
+    this.pocketSound = true;
   }
 
   update(powerMultiplier) {
 
     if (this.visible) {
+
       this.position.addTo(this.velocity.multiply(powerMultiplier)); //shoot ball according to power
       this.velocity = this.velocity.multiply(FRICTION); //adds friction to the ball by 0.98 
+      this.force *= FRICTION; //force is calculated to set sound frequency
 
       if (this.velocity.getLength() < MINIMUM_VELOCITY) {
+
         this.velocity = new Vector();
         this.isMoving = false;
       }
@@ -28,13 +32,22 @@ class Ball {
   draw() {
 
     if (this.visible) {
-      canvas.drawImage(this.sprite, this.position, CUE_BALL_ORIGIN.copyCoordinates());
+      canvas.drawImage(
+        this.sprite,
+        this.position.copyCoordinates(),
+        CUE_BALL_ORIGIN.copyCoordinates(),
+        0,
+        BALL_DIAMETER,
+        BALL_DIAMETER
+      );
     }
   }
 
   shootBall(power, rotationAngle) {
+
     this.velocity = new Vector(power * Math.cos(rotationAngle), power * Math.sin(rotationAngle));
     this.isMoving = true;
+    this.force = power;
   }
 
   collideWithBall(ball) {
@@ -43,16 +56,28 @@ class Ball {
 
       return;
     }
+
     //Elastic collision for 2D
     //step 1: finding unit normal vector
     const normalVector = this.position.subtract(ball.position);
-
     const distance = normalVector.getLength();
 
     if (distance >= BALL_DIAMETER) {
 
       return; //case of no collision
     }
+
+    //to assign cueball as firsthitball if it fails to hit any ball
+    if (snookerGame.firstHitBall === null
+      || snookerGame.firstHitBall === 'udefined') {
+
+      snookerGame.firstHitBall = this;
+    }
+
+
+    let ballCollide = audios.ballsCollide.cloneNode(false);
+    ballCollide.volume = ball.force / MAX_POWER;
+    ballCollide.play();
 
     //finding minimum translation distance for avoiding initial overlap ball placing
     const mtd = normalVector.multiply((BALL_DIAMETER - distance) / distance);
@@ -72,14 +97,14 @@ class Ball {
 
     //step 4: finding new normal velocities
     /*===================================================================================
-      since all the ball are of same mass we shouldn't consider mass as variable so,
+      since all the ball are of same mass we shouldn't consider mass as letiable so,
       v1nTag = v2n
       v2nTag = v1n
       for reference goto the link: http://www.vobarian.com/collisions/2dcollisions2.pdf
     ====================================================================================*/
 
-    var v1nTag = v2n;
-    var v2nTag = v1n;
+    let v1nTag = v2n;
+    let v2nTag = v1n;
 
 
     //step 5; convert the scalar normal and tangential velocities into vectors
@@ -95,90 +120,121 @@ class Ball {
 
     this.isMoving = true;
     ball.isMoving = true;
+    this.force = ball.force;
+
+    ballCollide.volume = this.force / MAX_POWER;
+    ballCollide.play();
+
   }
 
   collideWithTable(table) {
 
-    if (!this.visible) {
-
-      return;
-    }
+    if (!this.visible) return;
 
     if (this.isMoving) {
-      var collidedWithBorder = false;
 
-      if (this.position.y <= table.topY + BALL_RADIUS) {
-        this.position.y = table.topY + BALL_RADIUS;
+      let collidedWithBorder = false;
+
+      if (this.position.y <= table.topY + BALL_DIAMETER) {
+
+        this.position.y = table.topY + BALL_DIAMETER;
         this.velocity = new Vector(this.velocity.x, -this.velocity.y);
         collidedWithBorder = true;
       }
 
-      if (this.position.x >= table.rightX - BALL_RADIUS) {
-        this.position.x = table.rightX - BALL_RADIUS;
+      if (this.position.x >= table.rightX - BALL_DIAMETER) {
+
+        this.position.x = table.rightX - BALL_DIAMETER;
         this.velocity = new Vector(-this.velocity.x, this.velocity.y);
         collidedWithBorder = true;
       }
 
-      if (this.position.y >= table.bottomY - BALL_RADIUS) {
-        this.position.y = table.bottomY - BALL_RADIUS;
+      if (this.position.y >= table.bottomY - BALL_DIAMETER) {
+
+        this.position.y = table.bottomY - BALL_DIAMETER;
         this.velocity = new Vector(this.velocity.x, -this.velocity.y);
         collidedWithBorder = true;
       }
 
-      if (this.position.x <= table.leftX + BALL_RADIUS) {
-        this.position.x = table.leftX + BALL_RADIUS;
+      if (this.position.x <= table.leftX + BALL_DIAMETER) {
+
+        this.position.x = table.leftX + BALL_DIAMETER;
         this.velocity = new Vector(-this.velocity.x, this.velocity.y);
         collidedWithBorder = true;
       }
 
-      if (collidedWithBorder) this.velocity.multiply(FRICTION);
+      if (collidedWithBorder) {
+
+        let borderCollide = audios.borderCollide.cloneNode(false);
+        borderCollide.volume = this.force / MAX_POWER;
+        borderCollide.play();
+
+        this.velocity.multiply(FRICTION);
+      }
     }
   }
 
-  handlePocketCollision() {    
+  handlePocketCollision() {
 
-    for (var i = 0; i < TABLE_POCKETS.length; i++) {
+    for (let i = 0; i < TABLE_POCKETS.length; i++) {
+
+      if (!this.visible) return;
 
       if (this.position.distanceFrom(TABLE_POCKETS[i]) < POCKET_RADIUS) {
+
         this.inPocket = true;
         this.position = TABLE_POCKETS_SCORES[i].copyCoordinates();
       }
     }
 
     if (this.inPocket) {
+
       this.velocity = new Vector();
       this.hideBall();
+
+      if (this.pocketSound) {
+
+        audios.pocketed.play();
+
+        if (this.color !== BALL_COLOR.WHITE) this.pocketSound = false;
+      }
       this.isMoving = false;
-      if(this.color === 1 && this.countPoint) {
+
+      if (this.color === 1
+        && this.countPoint) {
+
         snookerGame.redBallsOnPocket++;
         this.countPoint = false;
       }
     }
   }
 
-  findPositionOnBoard(balls, newPosition = INITIAL_BALLS_POSITION[balls.indexOf(this)][0]) {
+  findNewPositionOnBoard(balls, newPosition = INITIAL_BALLS_POSITION[balls.indexOf(this)][0].copyCoordinates()) {
+    
+    for (let i = 0; i < balls.length; i++) {
 
-    for (var i = 0; i < balls.length; i++) {
-
-      if (this === balls[i]) continue;
+      if (this === balls[i]) continue; //escaping comparing same ball
 
       if (newPosition.distanceFrom(balls[i]) < BALL_RADIUS) {
-        this.findPositionOnBoard(balls, new Vector(newPosition + BALL_RADIUS, initialPosition.y));
+
+        this.findNewPositionOnBoard(balls, new Vector(INITIAL_BALLS_POSITION[balls.indexOf(this) - 1][0].copyCoordinates())); //recursively switches place if preoccupied
       }
-      
-      return newPosition;
+
+      return newPosition.copyCoordinates();
     }
   }
 
   hideBall() {
-    if(this.color === 8) {
-      snookerGame.stick.visible =false;
+
+    if (this.color === BALL_COLOR.WHITE) {
+      
+      snookerGame.stick.visible = false;
     }
     setTimeout(() => {
-      if(this.color === 8) {
+      if (this.color === BALL_COLOR.WHITE) {
         snookerGame.stick.visible = true;
       }
       this.visible = false;
-    }, 1500);
+    }, 1000);
   }
 }
