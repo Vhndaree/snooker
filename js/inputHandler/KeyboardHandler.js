@@ -2,7 +2,7 @@ class KeyboardHandler {
   constructor() {
     this.keyStates = [];
 
-    for (var i = 0; i < 256; ++i) {
+    for (let i = 0; i < 256; ++i) {
       this.keyStates.push(new ButtonState());
     }
 
@@ -11,10 +11,10 @@ class KeyboardHandler {
   }
 
   handleKeyDown(event) {
-    var code = event.keyCode;
+    let code = event.keyCode;
 
     if (code < 0 || code > 255) return;
-    // console.log(code);
+    
     if (!Keyboard.keyStates[code].down) {
       Keyboard.keyStates[code].pressed = true;
     }
@@ -22,7 +22,7 @@ class KeyboardHandler {
   }
 
   handleKeyUp(evt) {
-    var code = evt.keyCode;
+    let code = evt.keyCode;
 
     if (code < 0 || code > 255) return;
 
@@ -30,7 +30,7 @@ class KeyboardHandler {
   }
 
   reset() {
-    for (var i = 0; i < 256; ++i)
+    for (let i = 0; i < 256; ++i)
       this.keyStates[i].pressed = false;
   }
 
@@ -43,4 +43,4 @@ class KeyboardHandler {
   }
 }
 
-var Keyboard = new KeyboardHandler();
+let Keyboard = new KeyboardHandler();
