@@ -68,11 +68,13 @@ class Canvas2D {
       450 * loadingValueInPercentage,
       60
     );
-    this.canvasContext.fillStyle = 'rgb(255, 255, 255)';
     this.drawText(
       Math.round(loadingValueInPercentage * 100) + '%',
       600,
-      350
+      350,
+      'verdana',
+      16,
+      '#000'
     );
   }
 
