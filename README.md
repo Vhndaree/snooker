@@ -3,21 +3,20 @@ Snooker 2019 - Built on Vanilla JS
 
 This project is purely developed with core Javascript
 Major Features:
-1. 2 Player game 
-2. World standard rules applied
-3. Works on all browsers (may not work on IE some times)
+* 2 Player game 
+* World standard rules applied
+* Works on all browsers (may not work on IE some times)
 
 Major resources that contributes in this project:
-1 Main Ball Collisions : 
-  a. Game Development Web document
+  * Game Development Web document
     https://developer.mozilla.org/en-US/docs/Games
     
-  b. Building JavaScript Games: For Phones, Tablets, and Desktop[Book] by Arjan Egges
+  * Building JavaScript Games: For Phones, Tablets, and Desktop[Book] by Arjan Egges
   
-  c.2-Dimensional Elastic Collisions without Trigonometry 
+  * 2-Dimensional Elastic Collisions without Trigonometry 
     http://www.vobarian.com/collisions/2dcollisions2.pdf
     
-  d. Physics of Billiard
+  * Physics of Billiard
     https://www.real-world-physics-problems.com/physics-of-billiards.html
     
 Requirements:
