@@ -402,7 +402,7 @@ class GameWorld {
           continue;
         }
 
-        if(balls[i].color ==BALL_COLOR.WHITE) continue;
+        if(balls[i].color ==BALL_COLOR.RED) continue;
 
         balls[i].inPocket = false;
         balls[i].pocketSound = true;

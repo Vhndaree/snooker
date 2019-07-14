@@ -530,10 +530,10 @@ class Canvas2D {
 
     this.drawText(
       'Foul!',
-      500,
-      300,
+      525,
+      350,
       'verdana',
-      80
+      150
     );
   }
 
