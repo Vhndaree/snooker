@@ -24,4 +24,4 @@ Major resources that contributes in this project:
 >to date (019.7.14) it is tested and developed in i3 processor and 1366 * 786 display PC, It looks as expected in full screen mode
 >of PC with that specific Resolution monitors. However will be playable in any PC.
 
-copyright Ram Kumar Bhandari, 22 batch Intern - 2019, Leapfrog Technology inc. 
+:copyright: Ram Kumar Bhandari, 22 batch Intern - 2019, Leapfrog Technology inc. 
