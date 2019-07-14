@@ -265,7 +265,7 @@ class Canvas2D {
       if (Mouse.left.pressed) {
 
         if (snookerGame.playMusic) {
-          
+
           audios.click.play();
         }
         document.getElementById('formDiv').style.display = 'none';
@@ -524,18 +524,16 @@ class Canvas2D {
       'verdana',
       80
     );
-  }
-
-  }
+  } 
 
   displayFoulMessage() {
 
     this.drawText(
       'Foul!',
-      500,
-      300,
+      525,
+      350,
       'verdana',
-      80
+      150
     );
   }
 
