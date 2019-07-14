@@ -1,5 +1,4 @@
-# SNOOKER 2019
-## Snooker 2019 - Built on Vanilla JS
+# SNOOKER 2019 - Built on Vanilla JS
 
 ## This project is purely developed with core Javascript
 ### Major Features:
