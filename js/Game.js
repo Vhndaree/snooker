@@ -1,20 +1,41 @@
-class Game extends GameWorld{
+class Game extends GameWorld {
   constructor() {
     super();
   }
 
   start() {
     snookerGame.mainLoop();
+    // canvas.displayEndPage([]);
   }
 
   mainLoop() {
     canvas.clear();
-    snookerGame.update();
-    snookerGame.draw();
-    Mouse.reset();
 
+    if (snookerGame.twoPlayerMode && !snookerGame.gameStarted && !snookerGame.gameOver) {
+
+      canvas.drawForm(); //to get Users name
+    } else if (snookerGame.gameStarted && snookerGame.drawInstruction) {
+
+      canvas.drawPlayInstruction();
+
+      setTimeout(() => {
+        snookerGame.drawInstruction = false;
+        snookerGame.update();
+        snookerGame.draw();
+      }, 2500);
+    } else if (snookerGame.gameStarted && !snookerGame.drawInstruction) {
+
+      snookerGame.update();
+      snookerGame.draw();
+    } else if (snookerGame.gameOver) {
+
+      canvas.displayEndPage();
+    } else {
+
+      canvas.drawIndex();
+    }
+
+    Mouse.reset();
     requestAnimationFrame(snookerGame.mainLoop);
   }
 }
-
-var snookerGame = new Game();

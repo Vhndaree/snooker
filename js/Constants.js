@@ -1,19 +1,21 @@
 //Canvas
-const CANVAS_WIDTH = 1500;
-const CANVAS_HEIGHT = 748;
+const CANVAS_WIDTH = 1366;
+const CANVAS_HEIGHT = 768;
+const BOARD_WIDTH = CANVAS_WIDTH;
+const BOARD_HEIGHT = CANVAS_WIDTH / 2;
 
 //Stick
-const INITIAL_CUE_POSITION = new Vector(380, 370); //initial cue ball position x: 380, y:370 for testing later should be handled with mouse move initially
-const CUE_BALL_ORIGIN = new Vector(20, 17.5);
+const INITIAL_CUE_POSITION = new Vector(280, 370); //initial cue ball position x: 380, y:370 for testing later should be handled with mouse move initially
 const INITIAL_STICK_POSITION = new Vector(380, 370);
 const STICK_ORIGIN = new Vector(980, 10); //origin should always greater than width of stick element
 
 
 //Ball
-const FRICTION = 0.98;
+const FRICTION = 0.985;
 const MINIMUM_VELOCITY = 5;
-const BALL_DIAMETER = 36;
-const BALL_RADIUS = BALL_DIAMETER/2;
+const BALL_DIAMETER = 30;
+const BALL_RADIUS = BALL_DIAMETER / 2;
+const CUE_BALL_ORIGIN = new Vector(BALL_RADIUS, BALL_RADIUS);
 
 //Game Constants
 const BALL_COLOR = {
@@ -24,56 +26,69 @@ const BALL_COLOR = {
   BLUE: 5,
   PINK: 6,
   BLACK: 7,
-  WHITE:8,
+  WHITE: 8,
 };
 
 const INITIAL_BALLS_POSITION = [
-  [new Vector(1046, 370), BALL_COLOR.RED],
-  [new Vector(1077, 352.5), BALL_COLOR.RED],
-  [new Vector(1077, 387.5), BALL_COLOR.RED],
-  [new Vector(1108, 334.5), BALL_COLOR.RED],
-  [new Vector(1108, 370), BALL_COLOR.RED],
-  [new Vector(1108, 405.5), BALL_COLOR.RED],
-  [new Vector(1139, 316.75), BALL_COLOR.RED],
-  [new Vector(1139, 352.25), BALL_COLOR.RED],
-  [new Vector(1139, 387.75), BALL_COLOR.RED],
-  [new Vector(1139, 423.25), BALL_COLOR.RED],
-  [new Vector(1170, 299), BALL_COLOR.RED],
-  [new Vector(1170, 334.5), BALL_COLOR.RED],
-  [new Vector(1170, 370), BALL_COLOR.RED],
-  [new Vector(1170, 405.5), BALL_COLOR.RED],
-  [new Vector(1170, 441), BALL_COLOR.RED],
-  [new Vector(380, 495), BALL_COLOR.YELLOW],
-  [new Vector(380, 255), BALL_COLOR.GREEN],
-  // [new Vector(380, 370), BALL_COLOR.BROWN],
-  [new Vector(695.5, 370), BALL_COLOR.BLUE],
-  [new Vector(1011, 370), BALL_COLOR.PINK],
-  [new Vector(1300, 370), BALL_COLOR.BLACK],
+  [new Vector(953, 341.5), BALL_COLOR.RED],
+  [new Vector(980, 325), BALL_COLOR.RED],
+  [new Vector(980, 358), BALL_COLOR.RED],
+  [new Vector(1010, 310), BALL_COLOR.RED],
+  [new Vector(1010, 341.5), BALL_COLOR.RED],
+  [new Vector(1010, 374), BALL_COLOR.RED],
+  [new Vector(1038, 294), BALL_COLOR.RED],
+  [new Vector(1038, 325), BALL_COLOR.RED],
+  [new Vector(1038, 358), BALL_COLOR.RED],
+  [new Vector(1038, 390), BALL_COLOR.RED],
+  [new Vector(1065, 278), BALL_COLOR.RED],
+  [new Vector(1065, 310), BALL_COLOR.RED],
+  [new Vector(1065, 341.5), BALL_COLOR.RED],
+  [new Vector(1065, 374), BALL_COLOR.RED],
+  [new Vector(1065, 405), BALL_COLOR.RED],
+  [new Vector(349, 450), BALL_COLOR.YELLOW],
+  [new Vector(349, 232), BALL_COLOR.GREEN],
+  [new Vector(349, 341.5), BALL_COLOR.BROWN],
+  [new Vector(685, 341.5), BALL_COLOR.BLUE],
+  [new Vector(920, 341.5), BALL_COLOR.PINK],
+  [new Vector(1184, 341.5), BALL_COLOR.BLACK],
   [INITIAL_CUE_POSITION, BALL_COLOR.WHITE],
 ];
-const POWER = 170;
-const POWER_MULTIPLIER = 1/POWER;
-const STICK_ORIGIN_CHANGE = 5;
+const POWER_SHIFTER = 70;
+const POWER = 200;
+const POWER_MULTIPLIER = 1 / POWER;
+const STICK_ORIGIN_CHANGE = 2;
 const STICK_SHOOT_ORIGIN = new Vector(950, 10);
-const MAX_POWER = 7480;
+const MAX_POWER = 7000;
 
 
 //Table constants
 const TABLE_BORDER = {
-  topY: 85,
-  rightX: 1425,
-  bottomY: 673,
-  leftX: 85,
+  topY: 55,
+  rightX: 1310,
+  bottomY: 627,
+  leftX: 60,
 };
+
+const D_BOX_ORIGIN = new Vector(349, 341.5);
+const D_BOX_RADIUS = 114;
 
 //table wholes coordinates
 const TABLE_POCKETS = [
-  new Vector(75, 75),//top left
-  new Vector(750, 60),//top middle
-  new Vector(1430, 68),//top right
-  new Vector(68, 675),//bottom left
-  new Vector(750, 695),//bottom middle
-  new Vector(1435, 685),//bottom right
+  new Vector(69, 69),//top left
+  new Vector(685, 55),//top middle
+  new Vector(1300, 60),//top right
+  new Vector(69, 620),//bottom left
+  new Vector(684, 629),//bottom middle
+  new Vector(1300, 620),//bottom right
 ];
 
-const POCKET_RADIUS = 45;
+const TABLE_POCKETS_SCORES = [
+  new Vector(65, 60),//top left
+  new Vector(685, 62),//top middle
+  new Vector(1305, 58),//top right
+  new Vector(62, 622),//bottom left
+  new Vector(685, 622),//bottom middle
+  new Vector(1305, 622),//bottom right
+];
+
+const POCKET_RADIUS = 38;

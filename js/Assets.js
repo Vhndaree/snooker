@@ -1,71 +1,115 @@
-var sprites = {};
-var assetsStillLoading = 0;
+class AssetsLoader {
 
-function assetsLoadingLoop() {
-
-  if(assetsStillLoading) {
-    //here some display tweak should be done so that user could know game is going to open
-    requestAnimationFrame(assetsLoadingLoop.bind(this));
-  } else {
-    snookerGame = new Game();
-    snookerGame.start();
+  constructor() {
+    this.totalAssets = 0;
+    this.loadedAssets = 0;
   }
 
-}
+  init() {
 
-function loadAssets() {
-  function loadSpriteElement(fileName) {
-    assetsStillLoading++;
+    // before game starts assets
+    sprites.homeBackground = this.loadSpriteElement('home.jpg');
+    sprites.twoPlayer = this.loadSpriteElement('2player.png');
+    sprites.practice = this.loadSpriteElement('practice.png');
+    sprites.startGame = this.loadSpriteElement('startGame.png');
+    sprites.soundOn = this.loadSpriteElement('mute_button.png');
+    sprites.soundOff = this.loadSpriteElement('mute_button_pressed.png');
+    sprites.back = this.loadSpriteElement('back.png');
+    sprites.replay = this.loadSpriteElement('replay.png');
 
-    var spritePath = './assets/sprites/';
-    var sprite = new Image();
+    //after game starts assets
+    sprites.snookerBoard = this.loadSpriteElement('snooker-table2.png');
+    sprites.foreground = this.loadSpriteElement('foreground.png');
+    sprites.colorBall = this.loadSpriteElement('colouredBall.png');
+    sprites.playerTurn = this.loadSpriteElement('playerturn.png');
+
+    //Stick sprites load
+    sprites.stick1 = this.loadSpriteElement('pool-stick1.png');
+    sprites.stick2 = this.loadSpriteElement('pool-stick2.png');
+    sprites.stick3 = this.loadSpriteElement('pool-stick3.png');
+
+    //Ball sprites load
+    sprites.redBall = this.loadSpriteElement('red-ball.png');
+    sprites.yellowBall = this.loadSpriteElement('yellow-ball.png');
+    sprites.greenBall = this.loadSpriteElement('green-ball.png');
+    sprites.brownBall = this.loadSpriteElement('brown-ball.png');
+    sprites.blueBall = this.loadSpriteElement('blue-ball.png');
+    sprites.pinkBall = this.loadSpriteElement('pink-ball.png');
+    sprites.blackBall = this.loadSpriteElement('black-ball.png');
+    sprites.cueBall = this.loadSpriteElement('cue-ball.png');
+
+    //audio assets
+    audios.beforeGameMusic = this.loadAudioElements('DubstepRock.mp3');
+    audios.ballsCollide = this.loadAudioElements('BallsCollide.wav');
+    audios.pocketed = this.loadAudioElements('Hole.wav');
+    audios.borderCollide = this.loadAudioElements('Side.wav');
+    audios.strike = this.loadAudioElements('Strike.wav');
+    audios.click = this.loadAudioElements('click.mp3');
+
+    this.totalAssets = Object.keys(sprites).length + Object.keys(audios).length;
+    this.assetsLoadingLoop();
+  }
+
+  assetsLoadingLoop() {
+
+    if (this.loadedAssets < this.totalAssets) {
+
+      canvas.displayInitialLoadingScreen(this.loadedAssets / this.totalAssets);
+      requestAnimationFrame(this.assetsLoadingLoop.bind(this));
+    } else {
+      
+      snookerGame = new Game();
+      snookerGame.start();
+    }
+  }
+
+  loadSpriteElement(fileName) {
+
+    let spritePath = './assets/sprites/';
+    let sprite = new Image();
     sprite.src = spritePath + fileName;
 
-    sprite.onload = function() {
-      assetsStillLoading--;
+    if (!sprite.complete) {
+      this.loadedAssets++;
     }
 
     return sprite;
   }
 
-  sprites.snookerBoard = loadSpriteElement('snooker-table2.png');
+  loadAudioElements(fileName) {
 
-  //Stick sprites load
-  sprites.stick1 = loadSpriteElement('pool-stick1.png');
-  sprites.stick2 = loadSpriteElement('pool-stick2.png');
-  sprites.stick3 = loadSpriteElement('pool-stick3.png');
+    let audio = new Audio('./assets/audios/' + fileName);
+    audio.addEventListener("canplay", () => {
+      this.loadedAssets++;
+    });
+    return audio;
+  }
 
-  //Ball sprites load
-  sprites.redBall = loadSpriteElement('red-ball.png');
-  sprites.yellowBall = loadSpriteElement('yellow-ball.png');
-  sprites.greenBall = loadSpriteElement('green-ball.png');
-  sprites.brownBall = loadSpriteElement('brown-ball.png');
-  sprites.blueBall = loadSpriteElement('blue-ball.png');
-  sprites.pinkBall = loadSpriteElement('pink-ball.png');
-  sprites.blackBall = loadSpriteElement('black-ball.png');
-  sprites.cueBall = loadSpriteElement('cue-ball.png');
+  stopAudio(audio) {
+    audio.pause();
+    audio.currentTime = 0;
+  }
 
-  assetsLoadingLoop();
-}
+  getBallSpriteByColor(color) {
 
-function getBallSpriteByColor(color) {
-  
-  switch(color) {
-    case BALL_COLOR.RED:
-      return sprites.redBall;
-    case BALL_COLOR.YELLOW:
-      return sprites.yellowBall;
-    case BALL_COLOR.GREEN:
-      return sprites.greenBall;
-    case BALL_COLOR.BROWN:
-      return sprites.brownBall;
-    case BALL_COLOR.BLUE:
-      return sprites.blueBall;
-    case BALL_COLOR.PINK:
-      return sprites.pinkBall;
-    case BALL_COLOR.BLACK:
-      return sprites.blackBall;
-    case BALL_COLOR.WHITE:
-      return sprites.cueBall; 
+    switch (color) {
+
+      case BALL_COLOR.RED:
+        return sprites.redBall;
+      case BALL_COLOR.YELLOW:
+        return sprites.yellowBall;
+      case BALL_COLOR.GREEN:
+        return sprites.greenBall;
+      case BALL_COLOR.BROWN:
+        return sprites.brownBall;
+      case BALL_COLOR.BLUE:
+        return sprites.blueBall;
+      case BALL_COLOR.PINK:
+        return sprites.pinkBall;
+      case BALL_COLOR.BLACK:
+        return sprites.blackBall;
+      case BALL_COLOR.WHITE:
+        return sprites.cueBall;
+    }
   }
 }
