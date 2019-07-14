@@ -1,4 +1,4 @@
-# snooker
+# SNOOKER 2019
 Snooker 2019 - Built on Vanilla JS
 
 This project is purely developed with core Javascript
@@ -19,8 +19,9 @@ Major resources that contributes in this project:
   * Physics of Billiard
     https://www.real-world-physics-problems.com/physics-of-billiards.html
     
-Requirements:
-Since, it is a game purely developed with vanilla JS, There are no any specific requirements to run this game on any browser. But
-to date (019.7.14) it is tested and developed in i3 processor and 1366 * 786 display PC, It looks as expected in full screen mode
-of PC with that specific Resolution monitors. However will be playable in any PC.
+>Requirements:
+>Since, it is a game purely developed with vanilla JS, There are no any specific requirements to run this game on any browser. But
+>to date (019.7.14) it is tested and developed in i3 processor and 1366 * 786 display PC, It looks as expected in full screen mode
+>of PC with that specific Resolution monitors. However will be playable in any PC.
 
+{exp:copyright:show} Ram Kumar Bhandari, 22 batch Intern - 2019, Leapfrog Technology inc. 
