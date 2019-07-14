@@ -228,79 +228,6 @@ class Canvas2D {
       'white'
     );
     this.canvas.style.cursor = "context-menu";
-    let player1Input;
-    let player2Input;
-
-    if (document.body.childElementCount === 17) {
-      let form = document.createElement('div');
-      form.setAttribute('id', 'formDiv');
-      document.body.appendChild(form);
-
-      let player1label = document.createElement('span');
-      player1label.innerHTML = 'PLAYER 1';
-      player1Input = document.createElement('input');
-      player1Input.setAttribute('type', 'text');
-      player1Input.setAttribute('id', 'player1');
-      player1Input.setAttribute('placeholder', 'player 1 Name');
-
-      applyStyles(player1label, {
-        fontFamily: "Indie Flower",
-        color: "#fff",
-        fontSize: "24px",
-      });
-
-      applyStyles(player1Input, {
-        fontFamily: "Indie Flower",
-        color: "#fff",
-        fontSize: "24px",
-        background: "transparent",
-        border: "none",
-        width: "200px",
-        borderBottom: "white 1px solid",
-        marginLeft: "20px",
-        paddingLeft: "10px",
-        marginBottom: "50px",
-      });
-
-      let lineBreak = document.createElement("div");
-
-      let player2label = document.createElement('span');
-      player2label.innerHTML = 'PLAYER 2';
-      player2Input = document.createElement('input');
-      player2Input.setAttribute('type', 'text');
-      player2Input.setAttribute('id', 'player2');
-      player2Input.setAttribute('placeholder', 'player 2 Name');
-
-      applyStyles(player2label, {
-        fontFamily: "Indie Flower",
-        color: "#fff",
-        fontSize: "24px",
-      });
-
-      applyStyles(player2Input, {
-        fontFamily: "Indie Flower",
-        color: "#fff",
-        fontSize: "24px",
-        background: "transparent",
-        border: "none",
-        width: "200px",
-        borderBottom: "white 1px solid",
-        marginLeft: "20px",
-        paddingLeft: "10px",
-        marginBottom: "50px",
-      });
-
-      form.appendChild(player1label);
-      form.appendChild(player1Input);
-      form.appendChild(lineBreak);
-      form.appendChild(player2label);
-      form.appendChild(player2Input);
-
-      form.style.position = 'fixed';
-      form.style.top = 200 + 'px';
-      form.style.left = 200 + 'px';
-      form.style.zIndex = 2;
-    }
 
     document.getElementById('formDiv').style.display = 'block';
 
@@ -586,6 +513,19 @@ class Canvas2D {
         735,
       );
     }
+  }
+
+  displayFoulMessage() {
+
+    this.drawText(
+      'Foul!',
+      500,
+      300,
+      'verdana',
+      80
+    );
+  }
+
   }
 
   displayFoulMessage() {
