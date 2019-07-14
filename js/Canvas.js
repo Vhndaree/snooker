@@ -526,6 +526,19 @@ class Canvas2D {
     );
   }
 
+  }
+
+  displayFoulMessage() {
+
+    this.drawText(
+      'Foul!',
+      500,
+      300,
+      'verdana',
+      80
+    );
+  }
+
   displayEndPage() {
 
     let players = snookerGame.players;
