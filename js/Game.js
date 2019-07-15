@@ -1,13 +1,22 @@
 class Game extends GameWorld {
+  
+  /**
+   * constructor
+   */
   constructor() {
     super();
   }
 
+  /**
+   * calls mainloop
+   */
   start() {
     snookerGame.mainLoop();
-    // canvas.displayEndPage([]);
   }
 
+  /**
+   * mainloop
+   */
   mainLoop() {
     canvas.clear();
 

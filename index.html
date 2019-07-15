@@ -14,32 +14,33 @@
 </head>
 
 <body>
-  <div id = "formDiv">
+  <div id="formDiv">
     <span id="label1">PLAYER 1</span>
-    <input id = "player1" placeholder="Player 1 Name" type = "text">
+    <input id="player1" placeholder="Player 1 Name" type="text">
     <div></div>
     <span id="label2">PLAYER 2</span>
-    <input id = "player2" placeholder="Player 2 Name" type = "text">
+    <input id="player2" placeholder="Player 2 Name" type="text">
   </div>
   <canvas id="snookerGame"></canvas>
-  
+
   <script src="./js/Globals.js"></script>
   <script src="./js/Util.js"></script>
   <script src="./js/Vector.js"></script>
   <script src="./js/Constants.js"></script>
-  <script src="./js/inputHandler/ButtonState.js"></script>
-  <script src="./js/inputHandler/MouseHandler.js"></script>
-  <script src="./js/inputHandler/KeyboardHandler.js"></script>
+  <script src="./js/input_handler/ButtonState.js"></script>
+  <script src="./js/input_handler/MouseHandler.js"></script>
+  <script src="./js/input_handler/KeyboardHandler.js"></script>
   <script src="./js/Canvas.js"></script>
-  <script src="./js/Assets.js"></script>
-  <script src="./js/Ball.js"></script>
-  <script src="./js/Stick.js"></script>
-  <script src="./js/Player.js"></script>
+  <script src="./js/AssetsLoader.js"></script>
+  <script src="./js/game_components/Ball.js"></script>
+  <script src="./js/game_components/Stick.js"></script>
+  <script src="./js/game_components/Player.js"></script>
   <script src="./js/GameWorld.js"></script>
   <script src="./js/Game.js"></script>
   <script>
-    let startGame = new AssetsLoader();
-    startGame.init();
+    window.addEventListener('load', function () {
+      startGame = new AssetsLoader();
+    });
   </script>
 </body>
 

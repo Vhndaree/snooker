@@ -1,4 +1,32 @@
-class GameWorld {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: GameWorld.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: GameWorld.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>class GameWorld {
 
   /**
    * constructor
@@ -24,7 +52,7 @@ class GameWorld {
     this.playerTurn = 0;
     this.strike = 0; //to determine turn of ball color or red
 
-    for (let i = 0; i < INITIAL_BALLS_POSITION.length; i++) {
+    for (let i = 0; i &lt; INITIAL_BALLS_POSITION.length; i++) {
 
       this.balls[i] = new Ball(INITIAL_BALLS_POSITION[i][0].copyCoordinates(), INITIAL_BALLS_POSITION[i][1]);
     }
@@ -51,13 +79,13 @@ class GameWorld {
 
       this.handleCollision();
 
-      for (let i = 0; i < this.balls.length; i++) {
+      for (let i = 0; i &lt; this.balls.length; i++) {
 
         this.balls[i].update(POWER_MULTIPLIER);
       }
 
       if (!this.ballsAreMoving()
-        && this.stick.shoot) {
+        &amp;&amp; this.stick.shoot) {
 
 
 
@@ -104,7 +132,7 @@ class GameWorld {
 
     if (this.twoPlayerMode) this.drawScoreBoard(); //this method should handle practice mood point too
 
-    if (this.foul && this.twoPlayerMode) {
+    if (this.foul &amp;&amp; this.twoPlayerMode) {
       canvas.displayFoulMessage();
 
       setTimeout(() => {
@@ -112,7 +140,7 @@ class GameWorld {
       }, 1500);
     }
 
-    for (let i = 0; i < this.balls.length - 1; i++) {
+    for (let i = 0; i &lt; this.balls.length - 1; i++) {
 
       if (!this.balls[i].visible) continue;
       this.balls[i].draw();
@@ -142,7 +170,7 @@ class GameWorld {
     this.playerTurn = 0;
     this.strike = 0; //to determine turn of ball color or red
 
-    for (let i = 0; i < INITIAL_BALLS_POSITION.length; i++) {
+    for (let i = 0; i &lt; INITIAL_BALLS_POSITION.length; i++) {
 
       this.balls[i] = new Ball(INITIAL_BALLS_POSITION[i][0].copyCoordinates(), INITIAL_BALLS_POSITION[i][1]);
     }
@@ -164,12 +192,12 @@ class GameWorld {
    */
   handleCollision() {
 
-    for (let i = 0; i < this.balls.length; i++) {
+    for (let i = 0; i &lt; this.balls.length; i++) {
 
       this.balls[i].collideWithTable(this.table); //looks if collided with border
       this.balls[i].handlePocketCollision();
 
-      for (let j = i + 1; j < this.balls.length; j++) {
+      for (let j = i + 1; j &lt; this.balls.length; j++) {
 
         const ball1 = this.balls[i];
         const ball2 = this.balls[j];
@@ -185,7 +213,7 @@ class GameWorld {
    */
   regenerateNonRedBalls(pocketedBalls = []) {
 
-    if (pocketedBalls.length < 0) return;
+    if (pocketedBalls.length &lt; 0) return;
 
     if (!this.ballsAreMoving()) {
 
@@ -195,7 +223,7 @@ class GameWorld {
         this.cueBallOnMouse = true;
       }
 
-      if (this.redBallsOnPocket < this.getNumberOfNonCueBalls().redBalls) {
+      if (this.redBallsOnPocket &lt; this.getNumberOfNonCueBalls().redBalls) {
 
         this.regenerateBalls(this.balls);
       }
@@ -220,7 +248,7 @@ class GameWorld {
       return;
     }
 
-    for (let i = 0; i < this.pocketedBalls.length; i++) {
+    for (let i = 0; i &lt; this.pocketedBalls.length; i++) {
 
       if (this.pocketedBalls[i].color === BALL_COLOR.RED) {
 
@@ -228,17 +256,17 @@ class GameWorld {
         this.players[this.playerTurn].matchScore += 1;
       }
 
-      if (this.pocketedBalls[i].color != BALL_COLOR.RED && this.pocketedBalls[i].color != BALL_COLOR.WHITE) {
+      if (this.pocketedBalls[i].color != BALL_COLOR.RED &amp;&amp; this.pocketedBalls[i].color != BALL_COLOR.WHITE) {
 
         colorBall = true;
         this.players[this.playerTurn].matchScore += this.pocketedBalls[i].color;
       }
     }
 
-    if (this.redBallsOnPocket < this.getNumberOfNonCueBalls().redBalls) {
+    if (this.redBallsOnPocket &lt; this.getNumberOfNonCueBalls().redBalls) {
 
-      if (redBall && isEven(this.strike)) this.strike++;
-      else if (colorBall && isOdd(this.strike)) this.strike++;
+      if (redBall &amp;&amp; isEven(this.strike)) this.strike++;
+      else if (colorBall &amp;&amp; isOdd(this.strike)) this.strike++;
       else {
         this.playerTurn = 1 - this.playerTurn;
         this.strike = 0;
@@ -265,12 +293,12 @@ class GameWorld {
 
     let ballPocketed = [];
 
-    for (let i = 0; i < this.balls.length; i++) {
+    for (let i = 0; i &lt; this.balls.length; i++) {
 
-      for (let j = 0; j < TABLE_POCKETS.length; j++) {
+      for (let j = 0; j &lt; TABLE_POCKETS.length; j++) {
 
-        if (this.balls[i].position.distanceFrom(TABLE_POCKETS[j]) < POCKET_RADIUS
-          && this.balls[i].include) {
+        if (this.balls[i].position.distanceFrom(TABLE_POCKETS[j]) &lt; POCKET_RADIUS
+          &amp;&amp; this.balls[i].include) {
 
           ballPocketed.push(this.balls[i]);
 
@@ -336,7 +364,7 @@ class GameWorld {
 
       //if pockets invalid ball
       if (pocketedBalls.length > 0
-        && this.getlargestPocketedBall(pocketedBalls) > this.getSmallestVisibleBall()) {
+        &amp;&amp; this.getlargestPocketedBall(pocketedBalls) > this.getSmallestVisibleBall()) {
 
         penalty = (this.getlargestPocketedBall(pocketedBalls) > 4) ? this.getlargestPocketedBall(pocketedBalls) : 4;
         this.players[1 - this.playerTurn].calculateFoulScore(penalty); //add opponents score
@@ -347,7 +375,7 @@ class GameWorld {
       }
     }
 
-    if (this.redBallsOnPocket < this.getNumberOfNonCueBalls().redBalls) {
+    if (this.redBallsOnPocket &lt; this.getNumberOfNonCueBalls().redBalls) {
 
       //cueball in pocket
       if (this.isCueBallpocketed(pocketedBalls)) {
@@ -362,7 +390,7 @@ class GameWorld {
         return true;
       }
 
-      if (pocketedBalls.length == 1 && pocketedBalls[0] != firstHitBall && isOdd(snookerGame.strike)) {
+      if (pocketedBalls.length == 1 &amp;&amp; pocketedBalls[0] != firstHitBall &amp;&amp; isOdd(snookerGame.strike)) {
 
         penalty = 4;
 
@@ -376,7 +404,7 @@ class GameWorld {
 
       // touch redball first in color balls turn
       if (firstHitBall.color === BALL_COLOR.RED
-        && isOdd(this.strike)) {
+        &amp;&amp; isOdd(this.strike)) {
         this.players[1 - this.playerTurn].calculateFoulScore(); //add opponents score
 
         return true;
@@ -384,7 +412,7 @@ class GameWorld {
 
       //touch color ball in red balls turn
       if (firstHitBall.color != BALL_COLOR.RED
-        && isEven(this.strike)) {
+        &amp;&amp; isEven(this.strike)) {
 
         penalty = 4;
 
@@ -399,7 +427,7 @@ class GameWorld {
 
       //if pocket multiple balls in color balls turns
       if (pocketedBalls.length > 1
-        && isOdd(this.strike)) {
+        &amp;&amp; isOdd(this.strike)) {
 
         penalty = 4;
 
@@ -414,8 +442,8 @@ class GameWorld {
 
       //if pocket red and color ball in red balls turn
       if (pocketedBalls.length > 0
-        && isEven(this.strike)
-        && this.getlargestPocketedBall(pocketedBalls) > BALL_COLOR.RED) {
+        &amp;&amp; isEven(this.strike)
+        &amp;&amp; this.getlargestPocketedBall(pocketedBalls) > BALL_COLOR.RED) {
 
         penalty = 4;
 
@@ -433,7 +461,7 @@ class GameWorld {
    */
   regenerateBalls(balls) {
 
-    for (let i = 0; i < balls.length; i++) {
+    for (let i = 0; i &lt; balls.length; i++) {
 
       if (!balls[i].visible) {
 
@@ -460,7 +488,7 @@ class GameWorld {
    */
   isCueBallpocketed(pocketedBalls) {
 
-    for (let i = 0; i < pocketedBalls.length; i++) {
+    for (let i = 0; i &lt; pocketedBalls.length; i++) {
 
       if (pocketedBalls[i].color === BALL_COLOR.WHITE) return true;
     }
@@ -473,7 +501,7 @@ class GameWorld {
    */
   ballsAreMoving() {
 
-    for (let i = 0; i < this.balls.length; i++) {
+    for (let i = 0; i &lt; this.balls.length; i++) {
 
       if (!this.balls[i].visible) continue;
 
@@ -519,8 +547,8 @@ class GameWorld {
    */
   isDBoxArea() {
 
-    if (Mouse.position.distanceFrom(D_BOX_ORIGIN.copyCoordinates()) < D_BOX_RADIUS
-      && Mouse.position.x < D_BOX_ORIGIN.x) {
+    if (Mouse.position.distanceFrom(D_BOX_ORIGIN.copyCoordinates()) &lt; D_BOX_RADIUS
+      &amp;&amp; Mouse.position.x &lt; D_BOX_ORIGIN.x) {
 
       return true;
     }
@@ -536,12 +564,12 @@ class GameWorld {
     let redCount = 0;
     let colorCount = 0;
 
-    for (let i = 0; i < INITIAL_BALLS_POSITION.length; i++) {
+    for (let i = 0; i &lt; INITIAL_BALLS_POSITION.length; i++) {
 
       if (INITIAL_BALLS_POSITION[i][1] === BALL_COLOR.RED) redCount++; //gives number of redballs
 
       if (INITIAL_BALLS_POSITION[i][1] !== BALL_COLOR.RED
-        && INITIAL_BALLS_POSITION[i][1] !== BALL_COLOR.WHITE) {
+        &amp;&amp; INITIAL_BALLS_POSITION[i][1] !== BALL_COLOR.WHITE) {
         colorCount++;//gives number of color balls
       }
     }
@@ -559,10 +587,10 @@ class GameWorld {
 
     let count = 0;
 
-    for (let i = 0; i < this.balls.length; i++) {
+    for (let i = 0; i &lt; this.balls.length; i++) {
 
       if (this.balls[i].visible
-        && this.balls[i].color != BALL_COLOR.WHITE) {
+        &amp;&amp; this.balls[i].color != BALL_COLOR.WHITE) {
 
         count++;
       }
@@ -578,7 +606,7 @@ class GameWorld {
 
     let ballColor = [];
 
-    for (let i = 0; i < this.balls.length; i++) {
+    for (let i = 0; i &lt; this.balls.length; i++) {
 
       if (this.balls[i].visible) {
         ballColor.push(this.balls[i].color);
@@ -596,7 +624,7 @@ class GameWorld {
 
     let ballColor = [];
 
-    for (let i = 0; i < pocketedBalls.length; i++) {
+    for (let i = 0; i &lt; pocketedBalls.length; i++) {
       ballColor.push(pocketedBalls[i].color);
     }
 
@@ -612,3 +640,26 @@ class GameWorld {
   }
 }
 
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AssetsLoader.html">AssetsLoader</a></li><li><a href="Ball.html">Ball</a></li><li><a href="ButtonState.html">ButtonState</a></li><li><a href="Canvas.html">Canvas</a></li><li><a href="Game.html">Game</a></li><li><a href="GameWorld.html">GameWorld</a></li><li><a href="KeyboardHandler.html">KeyboardHandler</a></li><li><a href="MouseHandler.html">MouseHandler</a></li><li><a href="Player.html">Player</a></li><li><a href="Stick.html">Stick</a></li><li><a href="Vector.html">Vector</a></li></ul><h3>Global</h3><ul><li><a href="global.html#applyStyles">applyStyles</a></li><li><a href="global.html#getMax">getMax</a></li><li><a href="global.html#getMin">getMin</a></li><li><a href="global.html#getRandomNumber">getRandomNumber</a></li><li><a href="global.html#isEven">isEven</a></li><li><a href="global.html#isOdd">isOdd</a></li><li><a href="global.html#toggleFullscreen">toggleFullscreen</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Jul 16 2019 14:53:43 GMT+0545 (Nepal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,4 +1,10 @@
 class Stick {
+
+  /**
+   * 
+   * @param {*} position 
+   * @param {*} onShoot 
+   */
   constructor(position = new Vector(), onShoot) {
     this.position = position;
     this.rotationAngle = 0;
@@ -11,6 +17,9 @@ class Stick {
     this.sprite = this.sprites[0];
   }
 
+  /**
+   * updates stick object
+   */
   update() {
     this.updateRotation();
 
@@ -32,6 +41,9 @@ class Stick {
     }
   }
 
+  /**
+   * draws stick object
+   */
   draw() {
 
     if (!snookerGame.ballsAreMoving()
@@ -46,6 +58,7 @@ class Stick {
         938, 
         22
       );
+      
       canvas.canvasContext.beginPath();
       canvas.canvasContext.lineWidth = 3;
       canvas.canvasContext.strokeStyle = 'black';
@@ -56,6 +69,9 @@ class Stick {
     }
   }
 
+  /**
+   * update rotation with mouse position
+   */
   updateRotation() {
 
     let opposite = Mouse.position.y - this.position.y;
@@ -64,6 +80,9 @@ class Stick {
     this.rotationAngle = Math.atan2(opposite, adjacent);
   }
 
+  /**
+   * transfer power of stick to cueBall
+   */
   shootBall() {
 
     this.onShoot(this.power, this.rotationAngle);
@@ -72,6 +91,9 @@ class Stick {
     this.shoot = true;
   }
 
+  /**
+   * increase power on power increase key
+   */
   increasePower() {
 
     if (this.power < MAX_POWER) {
@@ -80,6 +102,9 @@ class Stick {
     }
   }
 
+  /**
+   * decrease power on power decrease key
+   */
   decreasePower() {
 
     if (this.power > 0) {
@@ -91,6 +116,10 @@ class Stick {
     }
   }
 
+  /**
+   * reposition stick on cue balls position
+   * @param {} position 
+   */
   reposition(position) {
 
     this.position = position.copyCoordinates();

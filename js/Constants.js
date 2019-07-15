@@ -72,7 +72,7 @@ const TABLE_BORDER = {
 const D_BOX_ORIGIN = new Vector(349, 341.5);
 const D_BOX_RADIUS = 114;
 
-//table wholes coordinates
+//table pockets coordinates
 const TABLE_POCKETS = [
   new Vector(69, 69),//top left
   new Vector(685, 55),//top middle
@@ -82,6 +82,7 @@ const TABLE_POCKETS = [
   new Vector(1300, 620),//bottom right
 ];
 
+//score ball position pocket coordinates
 const TABLE_POCKETS_SCORES = [
   new Vector(65, 60),//top left
   new Vector(685, 62),//top middle
@@ -91,4 +92,4 @@ const TABLE_POCKETS_SCORES = [
   new Vector(1305, 622),//bottom right
 ];
 
-const POCKET_RADIUS = 38;
+const POCKET_RADIUS = 35;

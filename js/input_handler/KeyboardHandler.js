@@ -1,4 +1,8 @@
 class KeyboardHandler {
+
+  /**
+   * initialize keyboard buttons 
+   */
   constructor() {
     this.keyStates = [];
 
@@ -10,6 +14,10 @@ class KeyboardHandler {
     document.onkeyup = this.handleKeyUp;
   }
 
+  /**
+   * handle key down event
+   * @param {*} event 
+   */
   handleKeyDown(event) {
     let code = event.keyCode;
 
@@ -21,6 +29,10 @@ class KeyboardHandler {
     Keyboard.keyStates[code].down = true;
   }
 
+  /**
+   * handle keyup event
+   * @param {*} evt 
+   */
   handleKeyUp(evt) {
     let code = evt.keyCode;
 
@@ -29,18 +41,28 @@ class KeyboardHandler {
     Keyboard.keyStates[code].down = false;
   }
 
+  /**
+   * resets keyboard events
+   */
   reset() {
+    
     for (let i = 0; i < 256; ++i)
       this.keyStates[i].pressed = false;
   }
 
+  /**
+   * return keystate on press
+   * @param {*} key 
+   */
   pressed(key) {
     return this.keyStates[key].pressed;
   }
 
+  /**
+   * returns keystate on key down
+   * @param {*} key 
+   */
   down(key) {
     return this.keyStates[key].down;
   }
 }
-
-let Keyboard = new KeyboardHandler();

@@ -1,4 +1,38 @@
-class Ball {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: game_components/Ball.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: game_components/Ball.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>class Ball {
+
+  /**
+   * 
+   * @param {*} position 
+   * @param {*} color 
+   */
   constructor(position = new Vector(), color) {
     this.position = position;
     this.velocity = new Vector();
@@ -13,6 +47,11 @@ class Ball {
     this.pocketSound = true;
   }
 
+  /**
+   * Updates ball object
+   * 
+   * @param {*} powerMultiplier 
+   */
   update(powerMultiplier) {
 
     if (this.visible) {
@@ -21,7 +60,7 @@ class Ball {
       this.velocity = this.velocity.multiply(FRICTION); //adds friction to the ball by 0.98 
       this.force *= FRICTION; //force is calculated to set sound frequency
 
-      if (this.velocity.getLength() < MINIMUM_VELOCITY) {
+      if (this.velocity.getLength() &lt; MINIMUM_VELOCITY) {
 
         this.velocity = new Vector();
         this.isMoving = false;
@@ -29,6 +68,9 @@ class Ball {
     }
   }
 
+  /**
+   * draws ball object
+   */
   draw() {
 
     if (this.visible) {
@@ -43,6 +85,12 @@ class Ball {
     }
   }
 
+  /**
+   * shoots ball according to power and direction
+   * 
+   * @param {*} power 
+   * @param {*} rotationAngle 
+   */
   shootBall(power, rotationAngle) {
 
     this.velocity = new Vector(power * Math.cos(rotationAngle), power * Math.sin(rotationAngle));
@@ -50,6 +98,10 @@ class Ball {
     this.force = power;
   }
 
+  /**
+   * Ball to ball collision detection
+   * @param {*} ball 
+   */
   collideWithBall(ball) {
 
     if (!this.visible || !ball.visible) {
@@ -76,8 +128,11 @@ class Ball {
 
 
     let ballCollide = audios.ballsCollide.cloneNode(false);
-    ballCollide.volume = ball.force / MAX_POWER;
-    ballCollide.play();
+    
+    if(snookerGame.playMusic) {
+      ballCollide.volume = ball.force / MAX_POWER;
+      ballCollide.play();
+    }
 
     //finding minimum translation distance for avoiding initial overlap ball placing
     const mtd = normalVector.multiply((BALL_DIAMETER - distance) / distance);
@@ -122,11 +177,17 @@ class Ball {
     ball.isMoving = true;
     this.force = ball.force;
 
-    ballCollide.volume = this.force / MAX_POWER;
-    ballCollide.play();
+    if(snookerGame.playMusic) {
+      ballCollide.volume = ball.force / MAX_POWER;
+      ballCollide.play();
+    }
 
   }
 
+  /**
+   * ball to table border collision detection
+   * @param {*} table 
+   */
   collideWithTable(table) {
 
     if (!this.visible) return;
@@ -135,7 +196,7 @@ class Ball {
 
       let collidedWithBorder = false;
 
-      if (this.position.y <= table.topY + BALL_DIAMETER) {
+      if (this.position.y &lt;= table.topY + BALL_DIAMETER) {
 
         this.position.y = table.topY + BALL_DIAMETER;
         this.velocity = new Vector(this.velocity.x, -this.velocity.y);
@@ -156,7 +217,7 @@ class Ball {
         collidedWithBorder = true;
       }
 
-      if (this.position.x <= table.leftX + BALL_DIAMETER) {
+      if (this.position.x &lt;= table.leftX + BALL_DIAMETER) {
 
         this.position.x = table.leftX + BALL_DIAMETER;
         this.velocity = new Vector(-this.velocity.x, this.velocity.y);
@@ -166,21 +227,27 @@ class Ball {
       if (collidedWithBorder) {
 
         let borderCollide = audios.borderCollide.cloneNode(false);
-        borderCollide.volume = this.force / MAX_POWER;
-        borderCollide.play();
+        
+        if(snookerGame.playMusic) {
+          borderCollide.volume = this.force / MAX_POWER;
+          borderCollide.play();
+        }
 
         this.velocity.multiply(FRICTION);
       }
     }
   }
 
+  /**
+   * Ball to pocket collision 
+   */
   handlePocketCollision() {
 
-    for (let i = 0; i < TABLE_POCKETS.length; i++) {
+    for (let i = 0; i &lt; TABLE_POCKETS.length; i++) {
 
       if (!this.visible) return;
 
-      if (this.position.distanceFrom(TABLE_POCKETS[i]) < POCKET_RADIUS) {
+      if (this.position.distanceFrom(TABLE_POCKETS[i]) &lt; POCKET_RADIUS) {
 
         this.inPocket = true;
         this.position = TABLE_POCKETS_SCORES[i].copyCoordinates();
@@ -192,7 +259,7 @@ class Ball {
       this.velocity = new Vector();
       this.hideBall();
 
-      if (this.pocketSound) {
+      if (this.pocketSound &amp;&amp; snookerGame.playMusic) {
 
         audios.pocketed.play();
 
@@ -201,7 +268,7 @@ class Ball {
       this.isMoving = false;
 
       if (this.color === 1
-        && this.countPoint) {
+        &amp;&amp; this.countPoint) {
 
         snookerGame.redBallsOnPocket++;
         this.countPoint = false;
@@ -209,21 +276,30 @@ class Ball {
     }
   }
 
+  /**
+   * find and return new position for ball to be regenerated
+   * @param {*} balls 
+   * @param {*} newPosition 
+   */
   findNewPositionOnBoard(balls, newPosition = INITIAL_BALLS_POSITION[balls.indexOf(this)][0].copyCoordinates()) {
     
-    for (let i = 0; i < balls.length; i++) {
+    for (let i = 0; i &lt; balls.length; i++) {
 
       if (this === balls[i]) continue; //escaping comparing same ball
 
-      if (newPosition.distanceFrom(balls[i]) < BALL_RADIUS) {
+      if (newPosition.distanceFrom(balls[i]) &lt; BALL_RADIUS) {
 
         this.findNewPositionOnBoard(balls, new Vector(INITIAL_BALLS_POSITION[balls.indexOf(this) - 1][0].copyCoordinates())); //recursively switches place if preoccupied
+        break;
       }
-
-      return newPosition.copyCoordinates();
     }
+    
+    return newPosition.copyCoordinates();
   }
 
+  /**
+   * hide ball if pocketed and case is valid
+   */
   hideBall() {
 
     if (this.color === BALL_COLOR.WHITE) {
@@ -237,4 +313,26 @@ class Ball {
       this.visible = false;
     }, 1000);
   }
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AssetsLoader.html">AssetsLoader</a></li><li><a href="Ball.html">Ball</a></li><li><a href="ButtonState.html">ButtonState</a></li><li><a href="Canvas.html">Canvas</a></li><li><a href="Game.html">Game</a></li><li><a href="GameWorld.html">GameWorld</a></li><li><a href="KeyboardHandler.html">KeyboardHandler</a></li><li><a href="MouseHandler.html">MouseHandler</a></li><li><a href="Player.html">Player</a></li><li><a href="Stick.html">Stick</a></li><li><a href="Vector.html">Vector</a></li></ul><h3>Global</h3><ul><li><a href="global.html#applyStyles">applyStyles</a></li><li><a href="global.html#getMax">getMax</a></li><li><a href="global.html#getMin">getMin</a></li><li><a href="global.html#getRandomNumber">getRandomNumber</a></li><li><a href="global.html#isEven">isEven</a></li><li><a href="global.html#isOdd">isOdd</a></li><li><a href="global.html#toggleFullscreen">toggleFullscreen</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Jul 16 2019 14:53:43 GMT+0545 (Nepal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

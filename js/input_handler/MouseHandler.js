@@ -1,8 +1,10 @@
 class MouseHandler {
+
+  /**
+   * initialize Mouse 
+   */
   constructor() {
     this.left = new ButtonState();
-    this.middle = new ButtonState();
-    this.right = new ButtonState();
 
     this.position = INITIAL_STICK_POSITION;
 
@@ -11,12 +13,18 @@ class MouseHandler {
     document.onmouseup = this.handleMouseUp;
   }
 
+  /**
+   * resets mouse events
+   */
   reset() {
     Mouse.left.pressed = false;
-    Mouse.middle.pressed = false;
-    Mouse.right.pressed = false;
   }
 
+
+  /**
+   * handle mouse move events
+   * @param {*} event 
+   */
   handleMousemove(event) {
     let x = event.pageX;
     let y = event.pageY;
@@ -24,6 +32,10 @@ class MouseHandler {
     Mouse.position = new Vector(x, y);
   }
 
+  /**
+   * handles mouse right click down event
+   * @param {*} event 
+   */
   handleMouseDown(event) {
 
     if (event.which === 1) {
@@ -32,31 +44,17 @@ class MouseHandler {
         Mouse.left.pressed = true;
       }
       Mouse.left.down = true;
-    } else if (event.which === 2) {
-
-      if (!Mouse.middle.down) {
-        Mouse.middle.pressed = true;
-      }
-      Mouse.middle.down = true;
-    } else if (event.which === 3) {
-
-      if (!Mouse.right.down) {
-        Mouse.right.pressed = true;
-      }
-      Mouse.right.down = true;
     }
   }
 
+  /**
+   * handles mouse right click up event
+   * @param {*} event 
+   */
   handleMouseUp(event) {
 
     if (event.which === 1) {
       Mouse.left.down = false;
-    } else if (event.which === 2) {
-      Mouse.middle.down = false;
-    } else if (event.which === 3) {
-      Mouse.right.down = false;
     }
   }
 }
-
-let Mouse = new MouseHandler();
