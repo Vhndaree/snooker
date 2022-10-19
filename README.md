@@ -1,4 +1,4 @@
-# SNOOKER 2019 - Built on Vanilla JS
+# SNOOKER 2019 - Built in Vanilla JS
 
 ## This project is purely developed with core Javascript
 ### Major Features:
@@ -6,7 +6,7 @@
 * World standard rules applied
 * Works on all browsers (may not work on IE some times)
 
-### Major resources that contributes in this project:
+### References
   * Game Development Web document
     https://developer.mozilla.org/en-US/docs/Games
     
